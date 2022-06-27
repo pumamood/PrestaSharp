@@ -1,13 +1,12 @@
-﻿using System;
+﻿using Bukimedia.PrestaSharp.Entities;
+using RestSharp;
+using RestSharp.Serializers.Xml;
+using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using Bukimedia.PrestaSharp.Entities;
-using RestSharp;
-using RestSharp.Serializers.Xml;
 
 namespace Bukimedia.PrestaSharp.Factories
 {
@@ -25,23 +24,14 @@ namespace Bukimedia.PrestaSharp.Factories
         }
 
         #region Privates
-
-        private void AddWsKey(RestRequest request)
-        {
-            request.AddParameter("ws_key", Account, ParameterType.QueryString); // used on every request
-        }
-
         private void AddBody(RestRequest request, IEnumerable<PrestaShopEntity> entities)
         {
-            request.RequestFormat = DataFormat.Xml;
-            var serialized = string.Empty;
-            serialized = "<prestashop>\n" + serialized + "\n</prestashop>";
-            request.AddParameter("application/xml", serialized, ParameterType.RequestBody);
+            request.AddXmlBody(new PrestaShopEntityCollection(entities));
         }
 
         private void AddBody(RestRequest request, PrestaShopEntity entity)
         {
-            AddBody(request, new List<PrestaShopEntity> { entity });
+            request.AddXmlBody(new PrestaShopEntityCollection() { entity });
         }
 
         #endregion
@@ -51,29 +41,32 @@ namespace Bukimedia.PrestaSharp.Factories
         protected void CheckResponse(RestResponse response, RestRequest request)
         {
             if (response.StatusCode == HttpStatusCode.InternalServerError
-                || response.StatusCode == HttpStatusCode.ServiceUnavailable
-                || response.StatusCode == HttpStatusCode.BadRequest
-                || response.StatusCode == HttpStatusCode.Unauthorized
-                || response.StatusCode == HttpStatusCode.MethodNotAllowed
-                || response.StatusCode == HttpStatusCode.Forbidden
-                || response.StatusCode == HttpStatusCode.NotFound
-                || response.StatusCode == 0)
+                            || response.StatusCode == HttpStatusCode.ServiceUnavailable
+                            || response.StatusCode == HttpStatusCode.BadRequest
+                            || response.StatusCode == HttpStatusCode.Unauthorized
+                            || response.StatusCode == HttpStatusCode.MethodNotAllowed
+                            || response.StatusCode == HttpStatusCode.Forbidden
+                            || response.StatusCode == HttpStatusCode.NotFound
+                            || response.StatusCode == 0 || response.ResponseStatus == ResponseStatus.Error)
             {
-                var requestParameters = Environment.NewLine;
-                foreach (var parameter in request.Parameters)
-                    requestParameters += $"{parameter.Name}: {parameter.Value}{Environment.NewLine}";
-                throw new PrestaSharpException(requestParameters + Environment.NewLine + response.Content,
-                    response.ErrorMessage,
-                    response.StatusCode, response.ErrorException);
+                var requestBody = string.Join(Environment.NewLine, request.Parameters.Where(x => x.Type == ParameterType.RequestBody).Select(x => x.Value));
+                var errMex = string.IsNullOrWhiteSpace(response.ErrorMessage) ?
+                    string.Join(Environment.NewLine, XDocument.Parse(response.Content).Descendants("error").Select(x => $"code: {x.Element("code").Value}, message: {x.Element("message").Value}"))
+                    : response.ErrorMessage;
+                throw new PrestaSharpException(requestBody, response.Content, errMex, response.StatusCode, response.ErrorException);
             }
         }
 
         #endregion
 
-        RestClient GetClient()
+        private RestClient GetClient()
         {
             var client = new RestClient(
-                options => { options.BaseUrl = new Uri(BaseUrl); },
+                options =>
+                {
+                    options.BaseUrl = new Uri(BaseUrl);
+                    options.Authenticator = new RestSharp.Authenticators.HttpBasicAuthenticator(Account, Password);
+                },
                 configureSerialization: s => s.UseXmlSerializer()
             );
             return client;
@@ -82,7 +75,6 @@ namespace Bukimedia.PrestaSharp.Factories
         protected T Execute<T>(RestRequest request) where T : new()
         {
             var client = GetClient();
-            AddWsKey(request);
             var response = client.Execute<T>(request);
             CheckResponse(response, request);
             return response.Data;
@@ -90,41 +82,32 @@ namespace Bukimedia.PrestaSharp.Factories
 
         protected bool ExecuteHead(RestRequest request)
         {
-            bool r = false;
             var client = GetClient();
-            AddWsKey(request);
             var response = client.Execute(request);
-            if (response.StatusCode == HttpStatusCode.OK)
-            {
-                r = true;
-            }
-            return r;
+            return response.StatusCode == HttpStatusCode.OK;
         }
 
-        protected T ExecuteForFilter<T>(RestRequest request) where T : new()
-        {
-            var client = GetClient();
-            AddWsKey(request);
-            var response = client.Execute<T>(request);
-            CheckResponse(response, request);
-            return response.Data;
-        }
+        //protected T ExecuteForFilter<T>(RestRequest request) where T : new()
+        //{
+        //    var client = GetClient();
+        //    var response = client.Execute<T>(request);
+        //    CheckResponse(response, request);
+        //    return response.Data;
+        //}
 
-        protected List<long> ExecuteForGetIds<T>(RestRequest request, string rootElement) where T : new()
-        {
-            var client = GetClient();
-            AddWsKey(request);
-            var response = client.Execute<T>(request);
-            var xDcoument = XDocument.Parse(response.Content);
-            var ids = (from doc in xDcoument.Descendants(rootElement)
-                       select long.Parse(doc.Attribute("id").Value)).ToList();
-            return ids;
-        }
+        //protected List<long> ExecuteForGetIds<T>(RestRequest request) where T : new()
+        //{
+        //    var client = GetClient();
+        //    var response = client.Execute<T>(request);
+        //    var xDcoument = XDocument.Parse(response.Content);
+        //    var ids = (from doc in xDcoument.Descendants(request.RootElement)
+        //               select long.Parse(doc.Attribute("id").Value)).ToList();
+        //    return ids;
+        //}
 
         protected byte[] ExecuteForImage(RestRequest request)
         {
-            var client = new RestClient();
-            AddWsKey(request);
+            var client = GetClient();
             var response = client.Execute(request);
             CheckResponse(response, request);
             return response.RawBytes;
@@ -133,7 +116,6 @@ namespace Bukimedia.PrestaSharp.Factories
         protected async Task<T> ExecuteAsync<T>(RestRequest request) where T : new()
         {
             var client = GetClient();
-            AddWsKey(request);
             var response = await client.ExecuteAsync<T>(request);
             CheckResponse(response, request);
             return response.Data;
@@ -141,34 +123,34 @@ namespace Bukimedia.PrestaSharp.Factories
 
         protected async Task<bool> ExecuteHeadAsync(RestRequest request)
         {
-            bool r = false;
             var client = GetClient();
-            AddWsKey(request);
             var response = await client.ExecuteAsync(request);
-            if (response.StatusCode == HttpStatusCode.OK)
-            {
-                r = true;
-            }
-            return r;
+            return response.StatusCode == HttpStatusCode.OK;
         }
 
-        protected async Task<List<long>> ExecuteForGetIdsAsync<T>(RestRequest request, string rootElement) where T : new()
-        {
-            var client = GetClient();
-            AddWsKey(request);
-            var response = await client.ExecuteAsync<T>(request);
-            CheckResponse(response, request);
-            var xDcoument = XDocument.Parse(response.Content);
-            var ids = xDcoument.Descendants(rootElement).Select(doc => long.Parse(doc.Attribute("id").Value)).ToList();
-            return ids;
-        }
+        //protected async Task<List<long>> ExecuteForGetIdsAsync<T>(RestRequest request) where T : new()
+        //{
+        //    var client = GetClient();
+        //    var response = await client.ExecuteAsync<T>(request);
+        //    CheckResponse(response, request);
+        //    var xDcoument = XDocument.Parse(response.Content);
+        //    var ids = xDcoument.Descendants(request.RootElement).Select(doc => long.Parse(doc.Attribute("id").Value)).ToList();
+        //    return ids;
+        //}
         protected async Task<byte[]> ExecuteForImageAsync(RestRequest request)
         {
             var client = GetClient();
-            AddWsKey(request);
             var response = await client.ExecuteAsync(request);
             CheckResponse(response, request);
             return response.RawBytes;
+        }
+
+        protected T ExecuteForAttachment<T>(RestRequest Request) where T : new()
+        {
+            var client = GetClient();
+            var response = client.Execute<T>(Request);
+            CheckResponse(response, Request);
+            return response.Data;
         }
 
         protected RestRequest RequestForGet(string resource, long? id, string rootElement)
@@ -219,7 +201,7 @@ namespace Bukimedia.PrestaSharp.Factories
         /// <param name="id"></param>
         /// <param name="imagePath"></param>
         /// <returns></returns>
-        protected RestRequest RequestForAddImage(string resource, long? id, string imagePath)
+        protected RestRequest RequestForAddImage(string resource, long? id, string imagePath, string legend = null)
         {
             if (id == null) throw new ApplicationException("The Id field cannot be null.");
 
@@ -230,6 +212,11 @@ namespace Bukimedia.PrestaSharp.Factories
                 RequestFormat = DataFormat.Xml
             };
             request.AddFile("image", imagePath);
+            if (!string.IsNullOrWhiteSpace(legend))
+            {
+                request.AddParameter("legend", legend, ParameterType.GetOrPost);
+                request.AlwaysMultipartFormData = true;
+            }
             return request;
         }
 
@@ -239,8 +226,9 @@ namespace Bukimedia.PrestaSharp.Factories
         /// <param name="resource"></param>
         /// <param name="id"></param>
         /// <param name="image"></param>
+        /// <param name="imageFileName"></param>
         /// <returns></returns>
-        protected RestRequest RequestForAddImage(string resource, long? id, byte[] image, string imageFileName = null)
+        protected RestRequest RequestForAddImage(string resource, long? id, byte[] image, string imageFileName = null, string legend = null)
         {
             if (id == null) throw new ApplicationException("The Id field cannot be null.");
 
@@ -251,6 +239,11 @@ namespace Bukimedia.PrestaSharp.Factories
                 RequestFormat = DataFormat.Xml
             };
             request.AddFile("image", image, string.IsNullOrWhiteSpace(imageFileName) ? "dummy.png" : imageFileName);
+            if (!string.IsNullOrWhiteSpace(legend))
+            {
+                request.AddParameter("legend", legend, ParameterType.GetOrPost);
+                request.AlwaysMultipartFormData = true;
+            }
             return request;
         }
 
@@ -353,7 +346,7 @@ namespace Bukimedia.PrestaSharp.Factories
         /// <param name="rootElement"></param>
         /// <returns></returns>
         protected RestRequest RequestForFilter(string resource, string display, Dictionary<string, string> filter,
-            string sort, string limit, string rootElement)
+            string sort, string limit, string rootElement = null)
         {
             var request = new RestRequest
             {
@@ -383,66 +376,40 @@ namespace Bukimedia.PrestaSharp.Factories
             return request;
         }
 
-        public static byte[] ImageToBinary(string imagePath)
+        //public static byte[] ImageToBinary(string imagePath)
+        //{
+        //    var fileStream = new System.IO.FileStream(imagePath, System.IO.FileMode.Open, System.IO.FileAccess.Read);
+        //    var buffer = new byte[fileStream.Length];
+        //    fileStream.Read(buffer, 0, (int)fileStream.Length);
+        //    fileStream.Close();
+        //    return buffer;
+        //}
+        protected RestRequest RequestForAddAttachment(string filePath, ContentType contentType = null)
         {
-            var fileStream = new FileStream(imagePath, FileMode.Open, FileAccess.Read);
-            var buffer = new byte[fileStream.Length];
-            fileStream.Read(buffer, 0, (int)fileStream.Length);
-            fileStream.Close();
-            return buffer;
-        }
-        protected T ExecuteForAttachment<T>(RestRequest Request) where T : new()
-        {
-            var client = GetClient();
-            //client.Authenticator = new HttpBasicAuthenticator(this.Account, this.Password);
-            Request.AddParameter("ws_key", this.Account, ParameterType.QueryString);
-            // Aggiunto meccanismo di "bypass" del controllo sulla validit� del certificato SSL
-            ServicePointManager.Expect100Continue = true;
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-            ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
-            // Fine modifica
-            var response = client.Execute<T>(Request);
-            if (response.StatusCode == HttpStatusCode.InternalServerError
-                || response.StatusCode == HttpStatusCode.ServiceUnavailable
-                || response.StatusCode == HttpStatusCode.BadRequest
-                || response.StatusCode == HttpStatusCode.Unauthorized
-                || response.StatusCode == HttpStatusCode.MethodNotAllowed
-                || response.StatusCode == HttpStatusCode.Forbidden
-                || response.StatusCode == HttpStatusCode.NotFound
-                || response.StatusCode == 0)
+            var request = new RestRequest
             {
-                string RequestParameters = Environment.NewLine;
-                foreach (RestSharp.Parameter Parameter in Request.Parameters)
-                {
-                    RequestParameters += Parameter.Name + "=" + Parameter.Value + Environment.NewLine + Environment.NewLine;
-                }
-                var Exception = new PrestaSharpException(RequestParameters + response.Content, response.ErrorMessage, response.StatusCode, response.ErrorException);
-                throw Exception;
-            }
-            return response.Data;
-        }
-        protected RestRequest RequestForAddAttachment(string filePath)
-        {
-            var request = new RestRequest();
-            request.Resource = "/attachments/file/";
-            request.Method = Method.Post;
-            request.RequestFormat = DataFormat.Xml;
+                Resource = "/attachments/file/",
+                Method = Method.Post,
+                RequestFormat = DataFormat.Xml
+            };
             string fileName = System.IO.Path.GetFileName(filePath);
             request.AddParameter("name", fileName);
             request.AddParameter("file_name", fileName);
-            request.AddFile("file", filePath, "application/pdf");
+            request.AddFile("file", filePath, contentType);
             return request;
         }
-        protected RestRequest RequestForUpdateAttachment(string filePath, long id)
+        protected RestRequest RequestForUpdateAttachment(string filePath, long id, ContentType contentType = null)
         {
-            var request = new RestRequest();
-            request.Resource = "/attachments/file/" + id;
-            request.Method = Method.Put;
-            request.RequestFormat = DataFormat.Xml;
+            var request = new RestRequest
+            {
+                Resource = "/attachments/file/" + id,
+                Method = Method.Put,
+                RequestFormat = DataFormat.Xml
+            };
             string fileName = System.IO.Path.GetFileName(filePath);
             request.AddParameter("name", fileName);
             request.AddParameter("file_name", fileName);
-            request.AddFile("file", filePath, "application/pdf");
+            request.AddFile("file", filePath, contentType);
             return request;
         }
     }

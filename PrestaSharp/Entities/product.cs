@@ -18,14 +18,14 @@ namespace Bukimedia.PrestaSharp.Entities
         /// <summary>
         /// It´s a logical bool.
         /// </summary>
-        public int? New { get; set; }
+        public int? @new { get; set; }
         public long? cache_default_attribute { get; set; }
         public long? id_default_image { get; set; }
         public long? id_default_combination { get; set; }
         public long? id_tax_rules_group { get; set; }
         public long? position_in_category { get; set; }
-        public string manufacturer_name { get; }
-        public long quantity { get; }
+        public string manufacturer_name { get; set; }
+        public long? quantity { get; set; }
         public string type { get; set; }
         public long id_shop_default { get; set; }
         public string reference { get; set; }

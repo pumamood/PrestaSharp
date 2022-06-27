@@ -10,18 +10,16 @@ using System.Runtime.Serialization;
 
 namespace Bukimedia.PrestaSharp.Entities.AuxEntities
 {
-    [Serializable]
-    [DataContract]
     [XmlType(Namespace = "Bukimedia/PrestaSharp/Entities/AuxEntities")]
     public class language: PrestaShopEntity
     {
         [XmlAttribute]
-        [DataMember]
+        [SerializeAs(Attribute = true)]
         public long id { get; set; }
 
         // Value is reserved word from RestSharp for loading the CDATA content from the XML file.
-        [XmlTextAttribute]
-        [DataMember]
+        [XmlText]
+        [SerializeAs(Content = true)]
         public string Value { get; set; }
 
         public language()

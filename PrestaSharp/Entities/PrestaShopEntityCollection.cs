@@ -9,17 +9,16 @@ using System.Xml.Serialization;
 namespace Bukimedia.PrestaSharp.Entities
 {
     [XmlType(Namespace = "Bukimedia/PrestaSharp/Entities")]
-    public class image : PrestaShopEntity
+    [SerializeAs(Name = "prestashop")]
+    public class PrestaShopEntityCollection : List<PrestaShopEntity>
     {
-        public long id { get; set; }
-        public long? id_product { get; set; }
-        public int? position { get; set; }
-        public int? cover { get; set; }
-
-        public List<Entities.AuxEntities.language> legend { get; set; }
-       
-        public image()
+        public PrestaShopEntityCollection() : base()
         {
+
+        }
+        public PrestaShopEntityCollection(IEnumerable<PrestaShopEntity> collection) : base(collection)
+        {
+
         }
     }
 }
