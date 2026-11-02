@@ -1,0 +1,279 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<prestashop xmlns:xlink="http://www.w3.org/1999/xlink">
+  <category>
+    <id>
+      <![CDATA[ 72 ]]>
+    </id>
+    <id_parent xlink:href="https://shop.spaziobattibaleno.it/api/categories/2">
+      <![CDATA[ 2 ]]>
+    </id_parent>
+    <level_depth>
+      <![CDATA[ 2 ]]>
+    </level_depth>
+    <nb_products_recursive notFilterable="true">
+      <![CDATA[ 37 ]]>
+    </nb_products_recursive>
+    <active>
+      <![CDATA[ 0 ]]>
+    </active>
+    <id_shop_default>
+      <![CDATA[ 1 ]]>
+    </id_shop_default>
+    <is_root_category>
+      <![CDATA[ 0 ]]>
+    </is_root_category>
+    <position>
+      <![CDATA[ 3 ]]>
+    </position>
+    <date_add>
+      <![CDATA[ 2020-01-06 16:55:33 ]]>
+    </date_add>
+    <date_upd>
+      <![CDATA[ 2025-11-28 14:15:55 ]]>
+    </date_upd>
+    <name>
+      <language id="1" xlink:href="https://shop.spaziobattibaleno.it/api/languages/1">
+        <![CDATA[ Sales ]]>
+      </language>
+      <language id="2" xlink:href="https://shop.spaziobattibaleno.it/api/languages/2">
+        <![CDATA[ Saldi ]]>
+      </language>
+    </name>
+    <link_rewrite>
+      <language id="1" xlink:href="https://shop.spaziobattibaleno.it/api/languages/1">
+        <![CDATA[ sales ]]>
+      </language>
+      <language id="2" xlink:href="https://shop.spaziobattibaleno.it/api/languages/2">
+        <![CDATA[ saldi ]]>
+      </language>
+    </link_rewrite>
+    <description>
+      <language id="1" xlink:href="https://shop.spaziobattibaleno.it/api/languages/1">
+        <![CDATA[ ]]>
+      </language>
+      <language id="2" xlink:href="https://shop.spaziobattibaleno.it/api/languages/2">
+        <![CDATA[ ]]>
+      </language>
+    </description>
+    <meta_title>
+      <language id="1" xlink:href="https://shop.spaziobattibaleno.it/api/languages/1">
+        <![CDATA[ ]]>
+      </language>
+      <language id="2" xlink:href="https://shop.spaziobattibaleno.it/api/languages/2">
+        <![CDATA[ ]]>
+      </language>
+    </meta_title>
+    <meta_description>
+      <language id="1" xlink:href="https://shop.spaziobattibaleno.it/api/languages/1">
+        <![CDATA[ ]]>
+      </language>
+      <language id="2" xlink:href="https://shop.spaziobattibaleno.it/api/languages/2">
+        <![CDATA[ ]]>
+      </language>
+    </meta_description>
+    <meta_keywords>
+      <language id="1" xlink:href="https://shop.spaziobattibaleno.it/api/languages/1">
+        <![CDATA[ ]]>
+      </language>
+      <language id="2" xlink:href="https://shop.spaziobattibaleno.it/api/languages/2">
+        <![CDATA[ ]]>
+      </language>
+    </meta_keywords>
+    <associations>
+      <categories nodeType="category" api="categories">
+        <category xlink:href="https://shop.spaziobattibaleno.it/api/categories/75">
+          <id>
+            <![CDATA[ 75 ]]>
+          </id>
+        </category>
+      </categories>
+      <products nodeType="product" api="products">
+        <product xlink:href="https://shop.spaziobattibaleno.it/api/products/444">
+          <id>
+            <![CDATA[ 444 ]]>
+          </id>
+        </product>
+        <product xlink:href="https://shop.spaziobattibaleno.it/api/products/445">
+          <id>
+            <![CDATA[ 445 ]]>
+          </id>
+        </product>
+        <product xlink:href="https://shop.spaziobattibaleno.it/api/products/1726">
+          <id>
+            <![CDATA[ 1726 ]]>
+          </id>
+        </product>
+        <product xlink:href="https://shop.spaziobattibaleno.it/api/products/1961">
+          <id>
+            <![CDATA[ 1961 ]]>
+          </id>
+        </product>
+        <product xlink:href="https://shop.spaziobattibaleno.it/api/products/4274">
+          <id>
+            <![CDATA[ 4274 ]]>
+          </id>
+        </product>
+        <product xlink:href="https://shop.spaziobattibaleno.it/api/products/4620">
+          <id>
+            <![CDATA[ 4620 ]]>
+          </id>
+        </product>
+        <product xlink:href="https://shop.spaziobattibaleno.it/api/products/4623">
+          <id>
+            <![CDATA[ 4623 ]]>
+          </id>
+        </product>
+        <product xlink:href="https://shop.spaziobattibaleno.it/api/products/4913">
+          <id>
+            <![CDATA[ 4913 ]]>
+          </id>
+        </product>
+        <product xlink:href="https://shop.spaziobattibaleno.it/api/products/5804">
+          <id>
+            <![CDATA[ 5804 ]]>
+          </id>
+        </product>
+        <product xlink:href="https://shop.spaziobattibaleno.it/api/products/6639">
+          <id>
+            <![CDATA[ 6639 ]]>
+          </id>
+        </product>
+        <product xlink:href="https://shop.spaziobattibaleno.it/api/products/6663">
+          <id>
+            <![CDATA[ 6663 ]]>
+          </id>
+        </product>
+        <product xlink:href="https://shop.spaziobattibaleno.it/api/products/6837">
+          <id>
+            <![CDATA[ 6837 ]]>
+          </id>
+        </product>
+        <product xlink:href="https://shop.spaziobattibaleno.it/api/products/6893">
+          <id>
+            <![CDATA[ 6893 ]]>
+          </id>
+        </product>
+        <product xlink:href="https://shop.spaziobattibaleno.it/api/products/6948">
+          <id>
+            <![CDATA[ 6948 ]]>
+          </id>
+        </product>
+        <product xlink:href="https://shop.spaziobattibaleno.it/api/products/6953">
+          <id>
+            <![CDATA[ 6953 ]]>
+          </id>
+        </product>
+        <product xlink:href="https://shop.spaziobattibaleno.it/api/products/7087">
+          <id>
+            <![CDATA[ 7087 ]]>
+          </id>
+        </product>
+        <product xlink:href="https://shop.spaziobattibaleno.it/api/products/7151">
+          <id>
+            <![CDATA[ 7151 ]]>
+          </id>
+        </product>
+        <product xlink:href="https://shop.spaziobattibaleno.it/api/products/7480">
+          <id>
+            <![CDATA[ 7480 ]]>
+          </id>
+        </product>
+        <product xlink:href="https://shop.spaziobattibaleno.it/api/products/7965">
+          <id>
+            <![CDATA[ 7965 ]]>
+          </id>
+        </product>
+        <product xlink:href="https://shop.spaziobattibaleno.it/api/products/8353">
+          <id>
+            <![CDATA[ 8353 ]]>
+          </id>
+        </product>
+        <product xlink:href="https://shop.spaziobattibaleno.it/api/products/8354">
+          <id>
+            <![CDATA[ 8354 ]]>
+          </id>
+        </product>
+        <product xlink:href="https://shop.spaziobattibaleno.it/api/products/8386">
+          <id>
+            <![CDATA[ 8386 ]]>
+          </id>
+        </product>
+        <product xlink:href="https://shop.spaziobattibaleno.it/api/products/8387">
+          <id>
+            <![CDATA[ 8387 ]]>
+          </id>
+        </product>
+        <product xlink:href="https://shop.spaziobattibaleno.it/api/products/8410">
+          <id>
+            <![CDATA[ 8410 ]]>
+          </id>
+        </product>
+        <product xlink:href="https://shop.spaziobattibaleno.it/api/products/8488">
+          <id>
+            <![CDATA[ 8488 ]]>
+          </id>
+        </product>
+        <product xlink:href="https://shop.spaziobattibaleno.it/api/products/8512">
+          <id>
+            <![CDATA[ 8512 ]]>
+          </id>
+        </product>
+        <product xlink:href="https://shop.spaziobattibaleno.it/api/products/8828">
+          <id>
+            <![CDATA[ 8828 ]]>
+          </id>
+        </product>
+        <product xlink:href="https://shop.spaziobattibaleno.it/api/products/8829">
+          <id>
+            <![CDATA[ 8829 ]]>
+          </id>
+        </product>
+        <product xlink:href="https://shop.spaziobattibaleno.it/api/products/8830">
+          <id>
+            <![CDATA[ 8830 ]]>
+          </id>
+        </product>
+        <product xlink:href="https://shop.spaziobattibaleno.it/api/products/8834">
+          <id>
+            <![CDATA[ 8834 ]]>
+          </id>
+        </product>
+        <product xlink:href="https://shop.spaziobattibaleno.it/api/products/8839">
+          <id>
+            <![CDATA[ 8839 ]]>
+          </id>
+        </product>
+        <product xlink:href="https://shop.spaziobattibaleno.it/api/products/8840">
+          <id>
+            <![CDATA[ 8840 ]]>
+          </id>
+        </product>
+        <product xlink:href="https://shop.spaziobattibaleno.it/api/products/8861">
+          <id>
+            <![CDATA[ 8861 ]]>
+          </id>
+        </product>
+        <product xlink:href="https://shop.spaziobattibaleno.it/api/products/8880">
+          <id>
+            <![CDATA[ 8880 ]]>
+          </id>
+        </product>
+        <product xlink:href="https://shop.spaziobattibaleno.it/api/products/8883">
+          <id>
+            <![CDATA[ 8883 ]]>
+          </id>
+        </product>
+        <product xlink:href="https://shop.spaziobattibaleno.it/api/products/8884">
+          <id>
+            <![CDATA[ 8884 ]]>
+          </id>
+        </product>
+        <product xlink:href="https://shop.spaziobattibaleno.it/api/products/8890">
+          <id>
+            <![CDATA[ 8890 ]]>
+          </id>
+        </product>
+      </products>
+    </associations>
+  </category>
+</prestashop>

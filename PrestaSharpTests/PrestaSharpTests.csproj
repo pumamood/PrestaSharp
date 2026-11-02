@@ -7,11 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="FakeCategory.xml" />
     <None Remove="FakeObject.xml" />
     <None Remove="FakeProduct.xml" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="FakeCategories.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="FakeCategory.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="FakeObject.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

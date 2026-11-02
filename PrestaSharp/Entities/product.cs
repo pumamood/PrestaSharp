@@ -1,10 +1,7 @@
-﻿using System;
+﻿using Bukimedia.PrestaSharp.Lib;
+using RestSharp.Serializers;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
-using Bukimedia.PrestaSharp.Lib;
 
 namespace Bukimedia.PrestaSharp.Entities
 {
@@ -14,17 +11,17 @@ namespace Bukimedia.PrestaSharp.Entities
         public long? id { get; set; } 
         public long? id_manufacturer { get; set; }
         public long? id_supplier { get; set; }
-        public long? id_category_default { get; set; }
-        /// <summary>
-        /// It´s a logical bool.
-        /// </summary>
+        public long? id_category_default { get; set; }        
+        [SerializeAs(Name = "_new")]
         public int? @new { get; set; }
         public long? cache_default_attribute { get; set; }
         public long? id_default_image { get; set; }
         public long? id_default_combination { get; set; }
         public long? id_tax_rules_group { get; set; }
         public long? position_in_category { get; set; }
+        [SerializeAs(Name ="_manufacturer_name")]
         public string manufacturer_name { get; set; }
+        [SerializeAs(Name = "_quantity")]
         public long? quantity { get; set; }
         public string type { get; set; }
         public long id_shop_default { get; set; }

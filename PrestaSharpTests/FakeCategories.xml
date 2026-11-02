@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<prestashop xmlns:xlink="http://www.w3.org/1999/xlink">
+    <categories>
+        <category>
+            <id>
+                <![CDATA[ 72 ]]>
+            </id>
+            <id_parent xlink:href="https://shop.spaziobattibaleno.it/api/categories/2">
+                <![CDATA[ 2 ]]>
+            </id_parent>
+            <level_depth>
+                <![CDATA[ 2 ]]>
+            </level_depth>
+            <nb_products_recursive notFilterable="true">
+                <![CDATA[ 75 ]]>
+            </nb_products_recursive>
+            <active>
+                <![CDATA[ 1 ]]>
+            </active>
+            <id_shop_default>
+                <![CDATA[ 1 ]]>
+            </id_shop_default>
+            <is_root_category>
+                <![CDATA[ 0 ]]>
+            </is_root_category>
+            <position>
+                <![CDATA[ 3 ]]>
+            </position>
+            <date_add>
+                <![CDATA[ 2020-01-06 16:55:33 ]]>
+            </date_add>
+            <date_upd>
+                <![CDATA[ 2026-01-06 18:55:06 ]]>
+            </date_upd>
+            <name>
+                <language id="1" xlink:href="https://shop.spaziobattibaleno.it/api/languages/1">
+                    <![CDATA[ Sales ]]>
+                </language>
+                <language id="2" xlink:href="https://shop.spaziobattibaleno.it/api/languages/2">
+                    <![CDATA[ Saldi ]]>
+                </language>
+            </name>
+            <link_rewrite>
+                <language id="1" xlink:href="https://shop.spaziobattibaleno.it/api/languages/1">
+                    <![CDATA[ sales ]]>
+                </language>
+                <language id="2" xlink:href="https://shop.spaziobattibaleno.it/api/languages/2">
+                    <![CDATA[ saldi ]]>
+                </language>
+            </link_rewrite>
+            <description>
+                <language id="1" xlink:href="https://shop.spaziobattibaleno.it/api/languages/1">
+                    <![CDATA[ ]]>
+                </language>
+                <language id="2" xlink:href="https://shop.spaziobattibaleno.it/api/languages/2">
+                    <![CDATA[ ]]>
+                </language>
+            </description>
+            <meta_title>
+                <language id="1" xlink:href="https://shop.spaziobattibaleno.it/api/languages/1">
+                    <![CDATA[ ]]>
+                </language>
+                <language id="2" xlink:href="https://shop.spaziobattibaleno.it/api/languages/2">
+                    <![CDATA[ ]]>
+                </language>
+            </meta_title>
+            <meta_description>
+                <language id="1" xlink:href="https://shop.spaziobattibaleno.it/api/languages/1">
+                    <![CDATA[ ]]>
+                </language>
+                <language id="2" xlink:href="https://shop.spaziobattibaleno.it/api/languages/2">
+                    <![CDATA[ ]]>
+                </language>
+            </meta_description>
+            <meta_keywords>
+                <language id="1" xlink:href="https://shop.spaziobattibaleno.it/api/languages/1">
+                    <![CDATA[ ]]>
+                </language>
+                <language id="2" xlink:href="https://shop.spaziobattibaleno.it/api/languages/2">
+                    <![CDATA[ ]]>
+                </language>
+            </meta_keywords>
+            <associations>
+                <categories nodeType="category" api="categories">
+                    <category xlink:href="https://shop.spaziobattibaleno.it/api/categories/74">
+                        <id>
+                            <![CDATA[ 74 ]]>
+                        </id>
+                    </category>
+                    <category xlink:href="https://shop.spaziobattibaleno.it/api/categories/75">
+                        <id>
+                            <![CDATA[ 75 ]]>
+                        </id>
+                    </category>
+                </categories>
+                <products nodeType="product" api="products">
+                    <product xlink:href="https://shop.spaziobattibaleno.it/api/products/444">
+                        <id>
+                            <![CDATA[ 444 ]]>
+                        </id>
+                    </product>
+                </products>
+            </associations>
+        </category>
+    </categories>
+</prestashop>

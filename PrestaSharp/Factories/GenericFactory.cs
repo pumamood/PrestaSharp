@@ -19,7 +19,7 @@ namespace Bukimedia.PrestaSharp.Factories
 
         public T Get(long id)
         {
-            RestRequest request = RequestForGet(pluralEntityName, id, singularEntityName);
+            RestRequest request = RequestForGet(pluralEntityName, id, null);
             return Execute<T>(request);
         }
 
@@ -124,7 +124,7 @@ namespace Bukimedia.PrestaSharp.Factories
 
         public async Task<T> GetAsync(long id)
         {
-            RestRequest request = RequestForGet(pluralEntityName, id, singularEntityName);
+            RestRequest request = RequestForGet(pluralEntityName, id, null);
             return await ExecuteAsync<T>(request);
         }
 
